@@ -1,0 +1,57 @@
+CC:=i686-elf-gcc
+
+CFLAGS?=-O2 -g
+CPPFLAGS?=
+LDFLAGS?=
+LIBS?=
+  
+CFLAGS:=$(CFLAGS) -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+CPPFLAGS:=$(CPPFLAGS) -D__is_myos_kernel -Iinclude
+LDFLAGS:=$(LDFLAGS)
+LIBS:=$(LIBS) -nostdlib -lk -lgcc
+ 
+ARCHDIR:=arch/i386
+ 
+include $(ARCHDIR)/make.config
+ 
+CFLAGS:=$(CFLAGS) $(KERNEL_ARCH_CFLAGS)
+CPPFLAGS:=$(CPPFLAGS) $(KERNEL_ARCH_CPPFLAGS)
+LDFLAGS:=$(LDFLAGS) $(KERNEL_ARCH_LDFLAGS)
+LIBS:=$(LIBS) $(KERNEL_ARCH_LIBS)
+ 
+OBJS:=\
+$(KERNEL_ARCH_OBJS) \
+kernel/kernel.o \
+ 
+CRTI_OBJ:=$(ARCHDIR)/crti.o
+CRTBEGIN_OBJ:=$(shell $(CC) $(CFLAGS) $(LDFLAGS) -print-file-name=crtbegin.o)
+CRTEND_OBJ:=$(shell $(CC) $(CFLAGS) $(LDFLAGS) -print-file-name=crtend.o)
+CRTN_OBJ:=$(ARCHDIR)/crtn.o
+ 
+ALL_OUR_OBJS:=\
+$(CRTI_OBJ) \
+$(OBJS) \
+$(CRTN_OBJ) \
+ 
+OBJ_LINK_LIST:=\
+$(CRTI_OBJ) \
+$(CRTBEGIN_OBJ) \
+$(OBJS) \
+$(CRTEND_OBJ) \
+$(CRTN_OBJ) \
+ 
+all: mos.kernel
+ 
+.PHONY: all clean
+ 
+mos.kernel: $(OBJ_LINK_LIST) $(ARCHDIR)/linker.ld
+	$(CC) -T $(ARCHDIR)/linker.ld -o $@ $(CFLAGS) $(OBJ_LINK_LIST) $(LDFLAGS) $(LIBS)
+ 
+%.o: %.c
+	$(CC) -c $< -o $@ -std=gnu11 $(CFLAGS) $(CPPFLAGS)
+ 
+%.o: %.s
+	$(CC) -c $< -o $@ $(CFLAGS) $(CPPFLAGS)
+ 
+clean:
+	rm -f mos.kernel $(OBJS) $(ALL_OUR_OBJS) *.o */*.o */*/*.o
