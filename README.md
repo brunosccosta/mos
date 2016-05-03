@@ -1,6 +1,9 @@
 # MOS
 M Operating System
 
+## Build
+Based on http://wiki.osdev.org/Meaty_Skeleton
+
 ## Roadmap
 1. ~~Simple Hello World Kernel!~~
 2. Newlines in terminal driver
