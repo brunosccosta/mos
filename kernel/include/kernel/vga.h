@@ -2,6 +2,7 @@
 #define _VGA_KERNEL_H
 
 #include <stddef.h>
+#include <stdint.h>
 
 /* Hardware text mode color constants. */
 enum vga_color {

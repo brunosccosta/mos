@@ -1,2 +1,2 @@
 #!/bin/bash
-qemu-system-i386 -kernel mos.bin
+qemu-system-i386 -kernel mos.kernel

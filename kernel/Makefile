@@ -2,7 +2,6 @@ include ../make.directories
 include ../make.cc.config
 
 CPPFLAGS:=$(CPPFLAGS) -I../libc/include
-LIBS:=$(LIBS) -nostdlib -lk -lgcc
  
 include $(ARCHDIR)/make.config
  
