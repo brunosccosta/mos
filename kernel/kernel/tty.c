@@ -34,7 +34,26 @@ void terminal_putentryat(char c, uint8_t color, size_t x, size_t y)
  
 void terminal_putchar(char c)
 {
-    terminal_putentryat(c, terminal_color, terminal_column, terminal_row);
+	switch (c)
+	{
+		case '\n':
+			terminal_newline();
+			break;
+		default:
+			terminal_regularchar(c);
+			break;
+	}
+}
+
+void terminal_newline()
+{
+	terminal_column = 0;
+	terminal_row++;
+}
+
+void terminal_regularchar(char c)
+{
+	terminal_putentryat(c, terminal_color, terminal_column, terminal_row);
     if (++terminal_column == VGA_WIDTH)
     {
         terminal_column = 0;
