@@ -1,12 +1,13 @@
-CC:=i686-elf-gcc
+include ../make.directories
+include ../make.cc.config
 
 CFLAGS?=-O2 -g
 CPPFLAGS?=
 LDFLAGS?=
 LIBS?=
   
-CFLAGS:=$(CFLAGS) -std=gnu99 -ffreestanding -O2 -Wall -Wextra
-CPPFLAGS:=$(CPPFLAGS) -D__is_myos_kernel -Iinclude
+CFLAGS:=$(CFLAGS)
+CPPFLAGS:=$(CPPFLAGS) -I../libc/include
 LDFLAGS:=$(LDFLAGS)
 LIBS:=$(LIBS) -nostdlib -lk -lgcc
  
@@ -48,7 +49,7 @@ mos.kernel: $(OBJ_LINK_LIST) $(ARCHDIR)/linker.ld
 	$(CC) -T $(ARCHDIR)/linker.ld -o $@ $(CFLAGS) $(OBJ_LINK_LIST) $(LDFLAGS) $(LIBS)
  
 %.o: %.c
-	$(CC) -c $< -o $@ -std=gnu11 $(CFLAGS) $(CPPFLAGS)
+	$(CC) -c $< -o $@ $(CFLAGS) $(CPPFLAGS)
  
 %.o: %.s
 	$(CC) -c $< -o $@ $(CFLAGS) $(CPPFLAGS)

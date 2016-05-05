@@ -1,5 +1,10 @@
 #ifndef _TTY_KERNEL_H
 #define _TTY_KERNEL_H
+
+#include <stddef.h>
+#include <stdint.h>
+#include <strlen.h>
+#include <kernel/vga.h>
  
 void terminal_initialize();
 void terminal_setcolor(uint8_t color);

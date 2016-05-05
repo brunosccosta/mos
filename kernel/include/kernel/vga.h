@@ -1,6 +1,8 @@
 #ifndef _VGA_KERNEL_H
 #define _VGA_KERNEL_H
 
+#include <stddef.h>
+
 /* Hardware text mode color constants. */
 enum vga_color {
     COLOR_BLACK = 0,
@@ -26,3 +28,5 @@ uint16_t make_vgaentry(char c, uint8_t color);
 
 static const size_t VGA_WIDTH = 80;
 static const size_t VGA_HEIGHT = 25;
+
+#endif
