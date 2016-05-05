@@ -8,6 +8,7 @@
 #error "This kernel needs to be compiled with a ix86-elf compiler"
 #endif
 
+#include <kernel/vga.h>
 #include <kernel/tty.h>
   
 #if defined(__cplusplus)
@@ -22,5 +23,13 @@ void kernel_main()
      * yet, '\n' will produce some VGA specific character instead.
      * This is normal.
      */
-    terminal_writestring("Hello, kernel World!\n");
+    terminal_writestring("Welcome to MOS\n");
+    terminal_writestring("M Operating System\n\n\n");
+    
+    terminal_writestring("Setting colors...\n");
+    
+    terminal_writestring_color("White\n", COLOR_WHITE, COLOR_BLACK);
+    terminal_writestring_color("Green\n", COLOR_LIGHT_GREEN, COLOR_BLACK);
+    
+    terminal_writestring("Default again\n");
 }
