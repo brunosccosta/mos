@@ -1,17 +1,8 @@
 include ../make.directories
 include ../make.cc.config
 
-CFLAGS?=-O2 -g
-CPPFLAGS?=
-LDFLAGS?=
-LIBS?=
-  
-CFLAGS:=$(CFLAGS)
 CPPFLAGS:=$(CPPFLAGS) -I../libc/include
-LDFLAGS:=$(LDFLAGS)
 LIBS:=$(LIBS) -nostdlib -lk -lgcc
- 
-ARCHDIR:=arch/i386
  
 include $(ARCHDIR)/make.config
  
