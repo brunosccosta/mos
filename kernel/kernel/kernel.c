@@ -26,10 +26,18 @@ void kernel_main()
     terminal_writestring("Welcome to MOS\n");
     terminal_writestring("M Operating System\n\n\n");
     
-    terminal_writestring("Setting colors...\n");
-    
-    terminal_writestring_color("White\n", COLOR_WHITE, COLOR_BLACK);
-    terminal_writestring_color("Green\n", COLOR_LIGHT_GREEN, COLOR_BLACK);
-    
-    terminal_writestring("Default again\n");
+    terminal_writestring("Testing colors...\n");
+    test_colors();
+}
+
+void test_colors()
+{
+	terminal_writestring_color("  ", COLOR_BLACK, COLOR_BLACK);
+    terminal_writestring_color("  ", COLOR_BLACK, COLOR_BLUE);
+    terminal_writestring_color("  ", COLOR_BLACK, COLOR_GREEN);
+    terminal_writestring_color("  ", COLOR_BLACK, COLOR_CYAN);
+    terminal_writestring_color("  ", COLOR_BLACK, COLOR_RED);
+    terminal_writestring_color("  ", COLOR_BLACK, COLOR_MAGENTA);
+    terminal_writestring_color("  ", COLOR_BLACK, COLOR_BROWN);
+    terminal_writestring_color("  ", COLOR_BLACK, COLOR_WHITE);
 }
