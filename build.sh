@@ -1,4 +1,14 @@
 #!/bin/bash
-i686-elf-as boot.s -o boot.o
-i686-elf-gcc -c kernel.c -o kernel.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
-i686-elf-gcc -T linker.ld -o mos.bin -ffreestanding -O2 -nostdlib boot.o kernel.o -lgcc
+
+# Building the libk
+cd libc
+make
+mv libk.a ..
+cd -
+
+# Building the kernel
+cd kernel
+make
+mv mos.kernel ..
+cd -
+
