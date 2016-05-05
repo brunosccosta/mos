@@ -1,15 +1,20 @@
 # MOS
 M Operating System
 
-## Build
-Based on http://wiki.osdev.org/Meaty_Skeleton
+## Building
+First, you should have a [cross-compiler](http://wiki.osdev.org/GCC_Cross-Compiler). Then, simply run
+```bash
+./build.sh
+./run.sh
+```
 
-## Roadmap
-1. ~~Simple Hello World Kernel!~~
-2. Newlines in terminal driver
-3. Terminal scrolling
+## Near future
+1. Printing debug informations (string, numbers, registers)
+2. Interrupt systems
+3. Heap
+4. Filesystem
 
-## Future
+## Further Future
 1. Self-hosting
 
-*Operating System built for learning purposes only.*
+*Operating System built for learning purposes only following [OSDev](http://wiki.osdev.org/).*
