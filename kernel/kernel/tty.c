@@ -1,3 +1,5 @@
+#include <stdarg.h>
+
 #include <kernel/tty.h>
 
 size_t terminal_row;
@@ -24,6 +26,11 @@ void terminal_initialize()
 void terminal_setcolor(uint8_t color)
 {
     terminal_current_color = color;
+}
+
+void terminal_set_default_color()
+{
+    terminal_setcolor(terminal_default_color);
 }
  
 void terminal_putentryat(char c, uint8_t color, size_t x, size_t y)
@@ -64,16 +71,61 @@ void terminal_regularchar(char c)
     }
 }
  
-void terminal_writestring(const char* data)
+void terminal_writestring(const char* data, ...)
 {
-    size_t datalen = strlen(data);
-    for (size_t i = 0; i < datalen; i++)
-        terminal_putchar(data[i]);
+    const char *p;
+    va_list argp;
+    int i;
+    char *s;
+    char fmtbuf[256];
+
+    va_start(argp, data);
+    
+    for (p = data; *p != '\0'; p++)
+    {
+        if (*p != '%')
+        {
+            terminal_putchar(*p);
+            continue;
+        }
+            
+        switch(*++p)
+		{
+		    case 'c':
+			    i = va_arg(argp, int);
+			    terminal_putchar(i);
+			    break;
+
+		    case 'd':
+			    i = va_arg(argp, int);
+			    s = itoa(i, fmtbuf, 10);
+			    terminal_putchar(s);
+			    break;
+
+		    case 's':
+			    s = va_arg(argp, char *);
+			    terminal_putchar(s);
+			    break;
+
+		    case 'x':
+			    i = va_arg(argp, int);
+			    s = itoa(i, fmtbuf, 16);
+			    terminal_putchar(s);
+			    break;
+
+		    case '%':
+			    terminal_putchar('%');
+			    break;
+		}
+	}
+	va_end(argp);
 }
 
-void terminal_writestring_color(const char* data, enum vga_color fg, enum vga_color bg)
-{
-	terminal_setcolor(make_color(fg, bg));
-	terminal_writestring(data);
-	terminal_setcolor(terminal_default_color);
-}
+
+
+
+
+
+
+
+

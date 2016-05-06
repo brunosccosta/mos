@@ -35,12 +35,27 @@ void kernel_main()
 
 void test_colors()
 {
-	terminal_writestring_color("  ", COLOR_BLACK, COLOR_BLACK);
-    terminal_writestring_color("  ", COLOR_BLACK, COLOR_BLUE);
-    terminal_writestring_color("  ", COLOR_BLACK, COLOR_GREEN);
-    terminal_writestring_color("  ", COLOR_BLACK, COLOR_CYAN);
-    terminal_writestring_color("  ", COLOR_BLACK, COLOR_RED);
-    terminal_writestring_color("  ", COLOR_BLACK, COLOR_MAGENTA);
-    terminal_writestring_color("  ", COLOR_BLACK, COLOR_BROWN);
-    terminal_writestring_color("  ", COLOR_BLACK, COLOR_WHITE);
+    terminal_setcolor(make_color(COLOR_BLACK, COLOR_BLACK));
+	terminal_writestring("  ");
+	
+	terminal_setcolor(make_color(COLOR_BLACK, COLOR_BLUE));
+    terminal_writestring("  ");
+    
+    terminal_setcolor(make_color(COLOR_BLACK, COLOR_GREEN));
+    terminal_writestring("  ");
+    
+    terminal_setcolor(make_color(COLOR_BLACK, COLOR_CYAN));
+    terminal_writestring("  ");
+    
+    terminal_setcolor(make_color(COLOR_BLACK, COLOR_RED));
+    terminal_writestring("  ");
+    
+    terminal_setcolor(make_color(COLOR_BLACK, COLOR_MAGENTA));
+    terminal_writestring("  ");
+    
+    terminal_setcolor(make_color(COLOR_BLACK, COLOR_BROWN));
+    terminal_writestring("  ");
+    
+    terminal_setcolor(make_color(COLOR_BLACK, COLOR_WHITE));
+    terminal_writestring("  ");
 }
