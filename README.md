@@ -10,6 +10,7 @@ First, you should have a [cross-compiler](http://wiki.osdev.org/GCC_Cross-Compil
 
 ## Near future
 1. Printing debug informations (string, numbers, registers)
+  * Considering standards like stdio to tty.c
 2. Interrupt systems
 3. Heap
 4. Filesystem
