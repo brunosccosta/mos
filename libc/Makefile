@@ -2,7 +2,8 @@ include ../make.directories
 include ../make.cc.config
 
 OBJS:=\
-string/strlen.o \
+string/string.o \
+stdlib/stdlib.o \
 
 BINARIES=libk.a
 

@@ -3,8 +3,6 @@
 
 #include <stddef.h>
 #include <stdint.h>
-#include <strlen.h>
-#include <kernel/vga.h>
  
 void terminal_initialize();
 

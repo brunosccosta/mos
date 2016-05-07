@@ -31,6 +31,10 @@ void kernel_main()
     
     terminal_writestring("Testing colors...\n");
     test_colors();
+
+    terminal_writestring("\n\n\nTesting numbers:\n");
+    terminal_writestring("Base-10 numbers: %d, %d, %d, %d\n", 5, 15, -2, -23);
+    terminal_writestring("Base-16 numbers: %x, %x\n", 0xFF, 0x234);
 }
 
 void test_colors()
@@ -58,4 +62,6 @@ void test_colors()
     
     terminal_setcolor(make_color(COLOR_BLACK, COLOR_WHITE));
     terminal_writestring("  ");
+
+    terminal_set_default_color();
 }

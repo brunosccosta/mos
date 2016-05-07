@@ -1,6 +1,10 @@
+#include <kernel/tty.h>
+#include <kernel/vga.h>
+
 #include <stdarg.h>
 
-#include <kernel/tty.h>
+#include <string.h>
+#include <stdlib.h>
 
 size_t terminal_row;
 size_t terminal_column;
@@ -99,18 +103,19 @@ void terminal_writestring(const char* data, ...)
 		    case 'd':
 			    i = va_arg(argp, int);
 			    s = itoa(i, fmtbuf, 10);
-			    terminal_putchar(s);
+			    terminal_writestring(s);
 			    break;
 
 		    case 's':
 			    s = va_arg(argp, char *);
-			    terminal_putchar(s);
+			    terminal_writestring(s);
 			    break;
 
 		    case 'x':
 			    i = va_arg(argp, int);
 			    s = itoa(i, fmtbuf, 16);
-			    terminal_putchar(s);
+                terminal_writestring("0x");
+			    terminal_writestring(s);
 			    break;
 
 		    case '%':
