@@ -10,6 +10,8 @@
 
 #include <kernel/vga.h>
 #include <kernel/tty.h>
+
+#include <stdio.h>
   
 #if defined(__cplusplus)
 extern "C" /* Use C linkage for kernel_main. */
@@ -26,42 +28,42 @@ void kernel_early()
 void kernel_main()
 {
 	/* Welcome message */
-    terminal_writestring("Welcome to MOS\n");
-    terminal_writestring("M Operating System\n\n\n");
+    printf("Welcome to MOS\n");
+    printf("M Operating System\n\n\n");
     
-    terminal_writestring("Testing colors...\n");
+    printf("Testing colors...\n");
     test_colors();
 
-    terminal_writestring("\n\n\nTesting numbers:\n");
-    terminal_writestring("Base-10 numbers: %d, %d, %d, %d\n", 5, 15, -2, -23);
-    terminal_writestring("Base-16 numbers: %x, %x\n", 0xFF, 0x234);
+    printf("\n\n\nTesting numbers:\n");
+    printf("Base-10 numbers: %d, %d, %d, %d\n", 5, 15, -2, -23);
+    printf("Base-16 numbers: %x, %x\n", 0xFF, 0x234);
 }
 
 void test_colors()
 {
     terminal_setcolor(make_color(COLOR_BLACK, COLOR_BLACK));
-	terminal_writestring("  ");
+	printf("  ");
 	
 	terminal_setcolor(make_color(COLOR_BLACK, COLOR_BLUE));
-    terminal_writestring("  ");
+    printf("  ");
     
     terminal_setcolor(make_color(COLOR_BLACK, COLOR_GREEN));
-    terminal_writestring("  ");
+    printf("  ");
     
     terminal_setcolor(make_color(COLOR_BLACK, COLOR_CYAN));
-    terminal_writestring("  ");
+    printf("  ");
     
     terminal_setcolor(make_color(COLOR_BLACK, COLOR_RED));
-    terminal_writestring("  ");
+    printf("  ");
     
     terminal_setcolor(make_color(COLOR_BLACK, COLOR_MAGENTA));
-    terminal_writestring("  ");
+    printf("  ");
     
     terminal_setcolor(make_color(COLOR_BLACK, COLOR_BROWN));
-    terminal_writestring("  ");
+    printf("  ");
     
     terminal_setcolor(make_color(COLOR_BLACK, COLOR_WHITE));
-    terminal_writestring("  ");
+    printf("  ");
 
     terminal_set_default_color();
 }

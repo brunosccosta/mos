@@ -2,6 +2,7 @@ include ../make.directories
 include ../make.cc.config
 
 OBJS:=\
+stdio/stdio.o \
 string/string.o \
 stdlib/stdlib.o \
 

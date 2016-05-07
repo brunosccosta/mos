@@ -1,9 +1,6 @@
 #include <kernel/tty.h>
 #include <kernel/vga.h>
 
-#include <stdarg.h>
-
-#include <string.h>
 #include <stdlib.h>
 
 size_t terminal_row;
@@ -74,63 +71,3 @@ void terminal_regularchar(char c)
         }
     }
 }
- 
-void terminal_writestring(const char* data, ...)
-{
-    const char *p;
-    va_list argp;
-    int i;
-    char *s;
-    char fmtbuf[256];
-
-    va_start(argp, data);
-    
-    for (p = data; *p != '\0'; p++)
-    {
-        if (*p != '%')
-        {
-            terminal_putchar(*p);
-            continue;
-        }
-            
-        switch(*++p)
-		{
-		    case 'c':
-			    i = va_arg(argp, int);
-			    terminal_putchar(i);
-			    break;
-
-		    case 'd':
-			    i = va_arg(argp, int);
-			    s = itoa(i, fmtbuf, 10);
-			    terminal_writestring(s);
-			    break;
-
-		    case 's':
-			    s = va_arg(argp, char *);
-			    terminal_writestring(s);
-			    break;
-
-		    case 'x':
-			    i = va_arg(argp, int);
-			    s = itoa(i, fmtbuf, 16);
-                terminal_writestring("0x");
-			    terminal_writestring(s);
-			    break;
-
-		    case '%':
-			    terminal_putchar('%');
-			    break;
-		}
-	}
-	va_end(argp);
-}
-
-
-
-
-
-
-
-
-
