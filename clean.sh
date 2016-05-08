@@ -1,6 +1,6 @@
 #!/bin/bash
 
-rm -rf libk.a mos.kernel
+rm -rf libk.a mos.iso isodir
 
 # Cleaning the libk
 cd libc
@@ -11,4 +11,3 @@ cd -
 cd kernel
 make clean
 cd -
-

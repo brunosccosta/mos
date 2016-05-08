@@ -31,11 +31,11 @@ $(OBJS) \
 $(CRTEND_OBJ) \
 $(CRTN_OBJ) \
  
-all: mos.kernel
+all: mos.bin
  
 .PHONY: all clean
  
-mos.kernel: $(OBJ_LINK_LIST) $(ARCHDIR)/linker.ld
+mos.bin: $(OBJ_LINK_LIST) $(ARCHDIR)/linker.ld
 	$(CC) -T $(ARCHDIR)/linker.ld -o $@ $(CFLAGS) $(OBJ_LINK_LIST) $(LDFLAGS) $(LIBS)
  
 %.o: %.c

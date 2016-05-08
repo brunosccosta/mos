@@ -1,2 +1,2 @@
 #!/bin/bash
-qemu-system-i386 -kernel mos.kernel
+qemu-system-i386 -cdrom mos.iso
