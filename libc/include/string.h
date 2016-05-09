@@ -7,4 +7,6 @@ void strswap(char *a, char *b);
 void strrev(char *str);
 size_t strlen(const char *str);
 
+void *memcpy(void *dest, const void *src, size_t count);
+
 #endif

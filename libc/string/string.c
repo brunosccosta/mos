@@ -28,3 +28,18 @@ size_t strlen(const char *str)
         ret++;
     return ret;
 }
+
+void *memcpy(void *dest, const void *src, size_t count)
+{
+    char *c_dest = (char *)dest;
+    char *c_src  = (char *)src;
+
+    void *ret = dest;
+
+    while (count--)
+    {
+        *c_dest++ = *c_src++;
+    }
+
+    return ret;
+}
