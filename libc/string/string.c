@@ -43,3 +43,17 @@ void *memcpy(void *dest, const void *src, size_t count)
 
     return ret;
 }
+
+void *memset(void *ptr, unsigned char value, size_t count)
+{
+	unsigned char *c_ptr = (unsigned char *) ptr;
+	
+	void *ret = ptr;
+	
+	while (count--)
+    {
+        *c_ptr++ = value;
+    }
+    
+    return ret;
+}
