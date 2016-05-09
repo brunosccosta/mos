@@ -10,6 +10,7 @@
 
 #include <kernel/vga.h>
 #include <kernel/tty.h>
+#include <kernel/gdt.h>
 
 #include <stdio.h>
   
@@ -18,6 +19,7 @@ extern "C" /* Use C linkage for kernel_main. */
 #endif
 
 void test_colors();
+void panic(char *msg);
 
 void kernel_early()
 {
@@ -27,16 +29,17 @@ void kernel_early()
 
 void kernel_main()
 {
-	/* Welcome message */
-    printf("Welcome to MOS\n");
-    printf("M Operating System\n\n\n");
+	printf("Initializing internals...\n");
     
-    printf("Testing colors...\n");
-    test_colors();
-
-    printf("\n\n\nTesting numbers:\n");
-    printf("Base-10 numbers: %d, %d, %d, %d\n", 5, 15, -2, -23);
-    printf("Base-16 numbers: %x, %x\n", 0xFF, 0x234);
+    /* Initializing GDT */
+    gdt_init();
+    
+    /* Welcome message */
+    printf("\n\nWelcome to MOS\n");
+    printf("M Operating System\n\n\n");
+        
+    panic("End of kernel main.");
+    for(;;);
 }
 
 void test_colors()
@@ -66,4 +69,10 @@ void test_colors()
     printf("  ");
 
     terminal_set_default_color();
+}
+
+void panic(char *msg)
+{
+	terminal_setcolor(make_color(COLOR_BLACK, COLOR_RED));
+    printf(msg);
 }
