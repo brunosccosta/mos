@@ -59,7 +59,7 @@ void terminal_newline()
     terminal_column = 0;
     if(++terminal_row == VGA_HEIGHT)
     {
-        memcpy(terminal_buffer, terminal_buffer + VGA_WIDTH, (VGA_WIDTH -1) * VGA_HEIGHT);
+        memcpy(terminal_buffer, terminal_buffer + VGA_WIDTH, (VGA_WIDTH -1) * VGA_HEIGHT * sizeof(uint16_t));
         terminal_row--;
     }   
 }
