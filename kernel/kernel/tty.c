@@ -2,6 +2,7 @@
 #include <kernel/vga.h>
 
 #include <stdlib.h>
+#include <string.h>
 
 size_t terminal_row;
 size_t terminal_column;
@@ -55,8 +56,12 @@ void terminal_putchar(char c)
 
 void terminal_newline()
 {
-	terminal_column = 0;
-	terminal_row++;
+    terminal_column = 0;
+    if(++terminal_row == VGA_HEIGHT)
+    {
+        memcpy(terminal_buffer, terminal_buffer + VGA_WIDTH, (VGA_WIDTH -1) * VGA_HEIGHT);
+        terminal_row--;
+    }   
 }
 
 void terminal_regularchar(char c)
@@ -64,10 +69,6 @@ void terminal_regularchar(char c)
 	terminal_putentryat(c, terminal_current_color, terminal_column, terminal_row);
     if (++terminal_column == VGA_WIDTH)
     {
-        terminal_column = 0;
-        if (++terminal_row == VGA_HEIGHT)
-        {
-            terminal_row = 0;
-        }
+        terminal_newline();
     }
 }
