@@ -11,6 +11,7 @@
 #include <kernel/vga.h>
 #include <kernel/tty.h>
 #include <kernel/gdt.h>
+#include <kernel/idt.h>
 
 #include <stdio.h>
   
@@ -31,8 +32,9 @@ void kernel_main()
 {
 	printf("Initializing internals...\n");
     
-    /* Initializing GDT */
+    /* Initializing GDT and IDT */
     gdt_init();
+    idt_init();
     
     /* Welcome message */
     printf("\n\nWelcome to MOS\n");
