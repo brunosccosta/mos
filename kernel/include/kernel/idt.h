@@ -20,6 +20,14 @@ struct idt_ptr
 } __attribute__((packed));
 
 void idt_init();
+void pic_init();
 void idt_set_gate(uint16_t select, uint32_t offset, uint8_t flags, struct idt_entry *desc);
+
+void isr_GP_exc();
+void isr_PF_exc();
+void isr_DZ_exc();
+
+void isr_default_int();
+void isr_schedule_int();
 
 #endif

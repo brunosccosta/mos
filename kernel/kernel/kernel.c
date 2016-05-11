@@ -35,12 +35,14 @@ void kernel_main()
     /* Initializing GDT and IDT */
     gdt_init();
     idt_init();
+    pic_init();
+    asm("sti");
     
     /* Welcome message */
     printf("\n\nWelcome to MOS\n");
     printf("M Operating System\n\n\n");
-        
-    panic("End of kernel main.");
+            
+    panic("End of kernel main.\n");
     for(;;);
 }
 
