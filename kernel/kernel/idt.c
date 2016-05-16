@@ -9,17 +9,14 @@
 
 struct idt_ptr idtr;
 
-extern void _asm_int_0();
-extern void _asm_int_1();
+extern void _isr0();
+extern void _isr8();
+extern void _isr13();
 
-extern void _asm_exc_DZ(void);
-extern void _asm_exc_GP(void);
-extern void _asm_exc_PF(void);
-extern void _asm_schedule(void);
+extern void _irq1();
 
 void idt_init()
 {
-	int i;
 	struct idt_entry* idt = (struct idt_entry*) IDTBASE;
 	
 	memset(idt, 0, sizeof(struct idt_entry) * IDTSIZE);
@@ -27,16 +24,13 @@ void idt_init()
 	idtr.limit = (uint16_t) IDTSIZE * 8;
 	idtr.base = (uint32_t) IDTBASE;
 	
-	for (i = 0; i < IDTSIZE; i++)
-        idt_set_gate(0x08, (uint32_t) _asm_schedule, 0x8E, &idt[i]);
-	
 	// Exceptions	
-	idt_set_gate(0x08, (uint32_t) _asm_exc_DZ, 0x8E, &idt[0]);   /* Division by zero */
-	idt_set_gate(0x08, (uint32_t) _asm_exc_GP, 0x8E, &idt[13]);  /* General Protection */
-    idt_set_gate(0x08, (uint32_t) _asm_exc_PF, 0x8E, &idt[14]);  /* Page Fault */
+	idt_set_gate(0x08, (uint32_t) _isr0, 0x8E, &idt[0]);	/* Division by zero */
+	idt_set_gate(0x08, (uint32_t) _isr8, 0x8E, &idt[8]);  	/* Double Fault */
+	idt_set_gate(0x08, (uint32_t) _isr13, 0x8E, &idt[13]);  /* General Protection */
 	
 	// Keyboard Interruption
-	idt_set_gate(0x08, (uint32_t) _asm_int_1, 0x8E, &idt[33]);   /* Keyboard */
+	idt_set_gate(0x08, (uint32_t) _irq1, 0x8E, &idt[33]);   /* Keyboard */
 	
 	/* Load the IDTR registry */
     asm("lidtl (idtr)");
@@ -55,34 +49,18 @@ void idt_set_gate(uint16_t select, uint32_t offset, uint8_t flags, struct idt_en
 	desc->always0 = 0x0;
 }
 
-void isr_GP_exc()
+void fault_handler(struct regs *r)
 {
-	printf("General Protection Exception.");
-	asm("hlt");
+    if (r->int_no < 32)
+    {
+        printf("Exception %d. System Halted!\n", r->int_no);
+        for (;;);
+    }
 }
 
-void isr_PF_exc()
+void irq_handler_1(struct regs *r)
 {
-	printf("Page Fault Exception.");
-	asm("hlt");
-}
-
-void isr_DZ_exc()
-{
-	printf("Division by zero Exception.");
-	asm("hlt");
-}
-
-void isr_default_int()
-{
-	printf("Interruption\n");
-}
-
-void isr_schedule_int()
-{
-	//printf("Schedule int");
-	output_byte(0x20,0x20);
-	output_byte(0xA0,0x20);
+	printf("Keyboard\n");
 }
 
 void pic_init(void)
@@ -92,8 +70,8 @@ void pic_init(void)
     output_byte(0xA0, 0x11);
 
     /* Initialization of ICW2 */
-    output_byte(0x21, 0x20);    /* start vector = 32 */
-    output_byte(0xA1, 0x70);    /* start vector = 96 */
+    output_byte(0x21, 0x20);
+    output_byte(0xA1, 0x28);
 
     /* Initialization of ICW3 */
     output_byte(0x21, 0x04);
@@ -104,8 +82,8 @@ void pic_init(void)
     output_byte(0xA1, 0x01);
 
     /* mask interrupts */
-    output_byte(0x21, 0x0);
-    output_byte(0xA1, 0x0);
+    output_byte(0x21, 0xfd);
+    output_byte(0xA1, 0xff);
     
     printf("PIC Initialized.\n");
 }

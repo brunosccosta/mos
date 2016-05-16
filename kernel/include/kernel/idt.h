@@ -19,15 +19,20 @@ struct idt_ptr
     uint32_t base;
 } __attribute__((packed));
 
+/* This defines what the stack looks like after an ISR was running */
+struct regs
+{
+    uint16_t gs, fs, es, ds;      						/* pushed the segs last */
+    uint32_t edi, esi, ebp, esp, ebx, edx, ecx, eax; 	/* pushed by 'pusha' */
+    uint32_t int_no, err_code;							/* our 'push byte #' and ecodes do this */
+    uint32_t eip, cs, eflags, useresp, ss;				/* pushed by the processor automatically */ 
+};
+
 void idt_init();
 void pic_init();
 void idt_set_gate(uint16_t select, uint32_t offset, uint8_t flags, struct idt_entry *desc);
 
-void isr_GP_exc();
-void isr_PF_exc();
-void isr_DZ_exc();
-
-void isr_default_int();
-void isr_schedule_int();
+void fault_handler(struct regs *r);
+void irq_handler_1(struct regs *r);
 
 #endif
