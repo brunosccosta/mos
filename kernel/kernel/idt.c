@@ -13,6 +13,7 @@ extern void _isr0();
 extern void _isr8();
 extern void _isr13();
 
+extern void _irq0();
 extern void _irq1();
 
 void idt_init()
@@ -30,6 +31,7 @@ void idt_init()
 	idt_set_gate(0x08, (uint32_t) _isr13, 0x8E, &idt[13]);  /* General Protection */
 	
 	// Keyboard Interruption
+	//idt_set_gate(0x08, (uint32_t) _irq0, 0x8E, &idt[32]);   /* PIT */
 	idt_set_gate(0x08, (uint32_t) _irq1, 0x8E, &idt[33]);   /* Keyboard */
 	
 	/* Load the IDTR registry */
@@ -53,14 +55,23 @@ void fault_handler(struct regs *r)
 {
     if (r->int_no < 32)
     {
-        printf("Exception %d. System Halted!\n", r->int_no);
+        printf("Exception %d. \n Error: %x\n System Halted!\n", r->int_no, r->err_code);
         for (;;);
     }
+}
+
+void irq_handler_0(struct regs *r)
+{
+	printf("Timer\n");
+	output_byte(0x20,0x20);
+	output_byte(0xA0,0x20);
 }
 
 void irq_handler_1(struct regs *r)
 {
 	printf("Keyboard\n");
+	output_byte(0x20,0x20);
+	output_byte(0xA0,0x20);
 }
 
 void pic_init(void)

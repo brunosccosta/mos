@@ -37,13 +37,15 @@ void kernel_main()
     idt_init();
     pic_init();
     asm("sti");
+    printf("Interruptions are enabled! Proceed with caution\n");
     
     /* Welcome message */
     printf("\n\nWelcome to MOS\n");
     printf("M Operating System\n\n\n");
-            
-    panic("End of kernel main.\n");
+                
     for(;;);
+    
+    panic("End of kernel main.\n");
 }
 
 void test_colors()

@@ -20,7 +20,6 @@
     popw	%es
     popw	%ds
     popa
-    addl	$8, %esp
     iret	
 .endm	
 
@@ -28,4 +27,10 @@
 _irq1:
     SAVE_REGS
     call irq_handler_1
-    RESTORE_REGS    
+    RESTORE_REGS  
+
+.global _irq0
+_irq0:
+    SAVE_REGS
+    call irq_handler_0
+    RESTORE_REGS  
