@@ -70,6 +70,7 @@ void irq_handler_0(struct regs *r)
 void irq_handler_1(struct regs *r)
 {
 	printf("Keyboard\n");
+	input_byte(0x60);
 	output_byte(0x20,0x20);
 	output_byte(0xA0,0x20);
 }
