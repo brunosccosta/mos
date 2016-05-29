@@ -9,12 +9,9 @@ First, you should have a [cross-compiler](http://wiki.osdev.org/GCC_Cross-Compil
 ```
 
 ## Near future
-1. Interrupt systems
-2. Heap
+1. Heap
+2. Processes
 3. Filesystem
-
-## Further Future
-1. Self-hosting
 
 ## Usefull Resources
 
