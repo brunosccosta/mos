@@ -8,12 +8,16 @@
 #error "This kernel needs to be compiled with a ix86-elf compiler"
 #endif
 
+#include <kernel/multiboot.h>
+
 #include <kernel/vga.h>
 #include <kernel/tty.h>
 #include <kernel/gdt.h>
 #include <kernel/idt.h>
 
 #include <stdio.h>
+
+#define KERNEL_END 0x10000
   
 #if defined(__cplusplus)
 extern "C" /* Use C linkage for kernel_main. */
@@ -28,8 +32,22 @@ void kernel_early()
     terminal_initialize();
 }
 
-void kernel_main()
+void kernel_main(multiboot_info_t* mbd)
 {
+	printf("Reading memory...\n");
+	unsigned long size = 0;
+	memory_map_t* mmap = mbd->mmap_addr;
+	while(mmap < mbd->mmap_addr + mbd->mmap_length)
+	{
+		if (mmap->type == 1 && mmap->base_addr_low >= KERNEL_END)
+		{
+			size += mmap->length_low;
+		}
+		
+		mmap = (memory_map_t*) ( (unsigned int)mmap + mmap->size + sizeof(unsigned int) );
+	}
+	printf("Size: %d\n\n", size);
+	
 	printf("Initializing internals...\n");
     
     /* Initializing GDT and IDT */
