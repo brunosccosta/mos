@@ -25,4 +25,4 @@ First, you should have a [cross-compiler](http://wiki.osdev.org/GCC_Cross-Compil
 - <http://beej.us/guide/bggdb/>
 - <http://www.delorie.com/gnu/docs/gdb/gdb_56.html>
 
-*Operating System built for learning purposes only following [OSDev](http://wiki.osdev.org/).*
+*Operating System built for learning purposes using [OSDev](http://wiki.osdev.org/).*
