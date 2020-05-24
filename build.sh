@@ -15,5 +15,5 @@ cd -
 mkdir -p isodir/boot/grub
 cp kernel/mos.bin isodir/boot/mos.bin
 cp grub.cfg isodir/boot/grub/grub.cfg
-grub2-mkrescue -o mos.iso isodir
+grub-mkrescue -o mos.iso isodir
 

@@ -30,7 +30,9 @@ apt-get install -y build-essential \
                    libgmp3-dev     \
                    libmpc-dev      \
                    libmpfr-dev     \
-                   texinfo
+                   texinfo         \
+                   grub-pc-bin     \
+                   xorriso
 
 # Downloading all the needed source
 wget -nc -P $SRC_DIR $BINUTILS_URL
